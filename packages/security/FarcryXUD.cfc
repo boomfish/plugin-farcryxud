@@ -18,7 +18,11 @@
 		<!--- Return struct --->
 		<cfset stResult.userid = "" />
 		<cfset stResult.authenticated = false />
-		<cfset stResult.message = "" />
+		<cfset stResult.message = "FarcryXUD has not been configured" />
+		
+		<cfif not len(application.config.farcryxud['#this.key#dsn'])>
+			<cfreturn stResult />
+		</cfif>
 		
 		<ft:processform>
 			<ft:processformObjects typename="#getLoginForm()#">
@@ -124,6 +128,10 @@
 		<cfset var qGroups = "" />
 		<cfset var aGroups = arraynew(1) />
 		
+		<cfif not len(application.config.farcryxud['#this.key#dsn'])>
+			<cfreturn aGroups />
+		</cfif>
+		
 		<cfquery datasource="#application.config.farcryxud['#this.key#dsn']#" name="qGroups">
 			select	g.title
 			from	(
@@ -149,6 +157,10 @@
 		<cfset var qGroups = "" />
 		<cfset var aGroups = arraynew(1) />
 		
+		<cfif not len(application.config.farcryxud['#this.key#dsn'])>
+			<cfreturn aGroups />
+		</cfif>
+		
 		<cfquery datasource="#application.config.farcryxud['#this.key#dsn']#" name="qGroups">
 			select		*
 			from		#application.config.farcryxud['#this.key#dbowner']#farGroup
@@ -166,6 +178,10 @@
 		<cfargument name="group" type="string" required="true" hint="The group to query" />
 		
 		<cfset var qUsers = "" />
+		
+		<cfif not len(application.config.farcryxud['#this.key#dsn'])>
+			<cfreturn arraynew(1) />
+		</cfif>
 		
 		<cfquery datasource="#application.config.farcryxud['#this.key#dsn']#" name="qUsers">
 			select	userid
@@ -189,7 +205,11 @@
 		
 		<cfset var prop = "" />
 		<cfset var stResult = structnew() />
-		
+
+		<cfif not len(application.config.farcryxud['#this.key#dsn'])>
+			<cfreturn stResult />
+		</cfif>
+
 		<cfquery datasource="#application.config.farcryxud['#this.key#dsn']#" name="qProfile">
 			select	*
 			from	#application.config.farcryxud['#this.key#dbowner']#dmProfile
