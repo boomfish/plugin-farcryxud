@@ -18,11 +18,12 @@
 		<!--- Return struct --->
 		<cfset stResult.userid = "" />
 		<cfset stResult.authenticated = false />
-		<cfset stResult.message = "FarcryXUD has not been configured" />
+		<cfset stResult.message = "" />
 		
 		<ft:processform>
 			<ft:processformObjects typename="#getLoginForm()#">
 				<cfif not len(application.config.farcryxud['#this.key#dsn'])>
+					<cfset stResult.message = "FarcryXUD has not been configured" />
 					<cfreturn stResult />
 				</cfif>
 				
