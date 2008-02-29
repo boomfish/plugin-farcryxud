@@ -20,12 +20,12 @@
 		<cfset stResult.authenticated = false />
 		<cfset stResult.message = "FarcryXUD has not been configured" />
 		
-		<cfif not len(application.config.farcryxud['#this.key#dsn'])>
-			<cfreturn stResult />
-		</cfif>
-		
 		<ft:processform>
 			<ft:processformObjects typename="#getLoginForm()#">
+				<cfif not len(application.config.farcryxud['#this.key#dsn'])>
+					<cfreturn stResult />
+				</cfif>
+				
 				<!--- If password encryption is enabled, hash the password --->
 				<cfif this.bEncrypted>
 					<cfset stProperties.password = hash(stLogin.password) />
